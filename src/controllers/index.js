@@ -20,10 +20,28 @@ const notFound = (req,res) => {
     return res.status(404).sendFile(path.resolve(`${__dirname}/../../views/notFound.html`));
 }
 
+const getName = (req,res) => res.json({ name });
+
+const setName = (req,res) => {
+  console.dir(req.body);
+
+  if(!req.body.firstname || !req.body.lastname){
+    return res.status(400).json({
+      error: 'Firstname or Lastname missing',
+      id: 'MissingParameter'
+    })
+  }
+
+  name = `${req.body.firstname} ${req.body.lastname}`;
+
+  return res.json({ name });
+}
+
 module.exports = {
   index: hostIndex,
   page1: hostPage1,
   page2: hostPage2,
   notFound,
-  
+  getName,
+  setName,
 }
